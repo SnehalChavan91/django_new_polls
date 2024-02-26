@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Question
 
 def index(request):
-    return HttpResponse("Hello,you are at the polls index.")
+    latest_question_list=Question.objects.order_by("-pub_date")[:5]
+    for q in latest_question_list:
+        output=",".join(q.question_text)
+    return HttpResponse(output)
 
 def contacts(request):
     return HttpResponse("Hello contacts.")
